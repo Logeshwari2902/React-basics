@@ -1,12 +1,38 @@
 import { render } from "@testing-library/react";
-import { Button, Table } from "antd";
-
+import { Button, Modal, Table } from "antd";
+import { useState } from "react";
+import AssignmentForm from "./AssignmentForm";
 function AssignmentTable(){
-    const colums=[
+  const [isModalOpen,setIsModalOpen]=useState(false)
+  const data=[
     {
-        key:'S.No',
+    Sno: 1,
+    assignmentTitle: 'Assignment 1',
+    assignmentDescription:'This is the first assignment',
+    assignmentDueDate:'2024-08-12'
+  },
+
+  {
+    Sno: 2,
+    assignmentTitle: 'Assignment 2',
+    assignmentDescription:'This is the first assignment',
+    assignmentDueDate:'2024-08-12'
+  },
+  {
+    Sno: 3,
+    assignmentTitle: 'Assignment 3',
+    assignmentDescription:'This is the first assignment',
+    assignmentDueDate:'2024-08-12'
+  }
+]
+
+
+const[tableData,setTableData]=useState([data])
+ const columns=[
+    {
+        key:'Sno',
         title:'S.No',
-        dataIndex:'sno'
+        dataIndex:'Sno'
     },
 
     {
@@ -28,36 +54,30 @@ function AssignmentTable(){
         key:'actions',
         title:'Actions',
         dataIndex:'actions',
-        render : ()=>{
+
+        render : (_,record)=>{
             return(<div style={{display:"flex",gap:"10px"}}>
-                    <Button type="primary">Edit</Button>
-                    <Button type="primary"danger>Delete</Button>
+                    <Button type="primary" onClick={handleEdit}>Edit</Button>
+                    <Button type="primary"danger onClick={()=>handleDelete(record)}>Delete</Button>
                   </div>
             )
             }
     }
    ]
-  const data=[
-    {
-    sno: 1,
-    assignmentTitle: 'Assignment 1',
-    assignmentDescription:'This is the first assignment',
-    assignmentDueDate:'2024-08-12'
-  },
-
-  {
-    sno: 2,
-    assignmentTitle: 'Assignment 2',
-    assignmentDescription:'This is the first assignment',
-    assignmentDueDate:'2024-08-12'
-  },
-  {
-    sno: 3,
-    assignmentTitle: 'Assignment 3',
-    assignmentDescription:'This is the first assignment',
-    assignmentDueDate:'2024-08-12'
-  }
-]
-    return( <Table columns={colums} dataSource={data} style={{marginTop:"10px"}}></Table>)
+   const handleEdit=()=>{
+    setIsModalOpen(true)
+   }
+   const handleCancel=()=>{
+    setIsModalOpen(false)
+   }
+  
+  const handleDelete=(record)=> {
+  const resultAfterDelete= tableData.filter((item)=>item.sno !== record.sno);
+  setTableData(resultAfterDelete)
+ }
+ 
+const modal = <Modal title="update assignment" open={isModalOpen}  onCancel={handleCancel}><AssignmentForm/></Modal>
+ return(<div>{modal}<Table columns={columns} dataSource={tableData} style={{marginTop:"10px"}}></Table></div>
+ )
 }
 export default AssignmentTable;

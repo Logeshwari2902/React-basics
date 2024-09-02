@@ -2,6 +2,7 @@ import { Button, Form,Input, Select} from "antd";
 import { useState } from "react";
 import AssignmentTable from "./AssignmentTable";
 import { Outlet, useNavigate } from "react-router-dom";
+import AssignmentForm from "./AssignmentForm";
 function AdminPage(){
 
     const navigate = useNavigate();
@@ -12,13 +13,13 @@ function AdminPage(){
         console.log(selected)
         navigate("/admin/"+value)
     }
-        
+     const handleSubmit =(values)=>{
+         console.log(values.assignmentTitle,values.assignmentDescription,values.courseDueDate)
+         alert(`Assignment Title: ${values.assignmentTitle} Assignment Description:${values.assignmentDescription} Assignment DueDate:${values.assignmentDueDate}`)
     
-    const handleSubmit =(values)=>{
-        console.log(values.courseTitle,values.courseDescription,values.courseStartingDate,values.courseEndingDate)
-        alert(`Course Title: ${values.courseTitle} Course Description:${values.courseDescription} Course Startingdate:${values.courseStartingDate} Course Endigndate:${values.courseEndingDate}`)
+      }
         // This is the code to send this data to backend and insert in database
-    }
+    
     const courseform = <Form onFinish={handleSubmit}>
     <Form.Item label="Course title:" name="courseTitle">
         <Input placeholder="please enter your course title"/>
@@ -38,24 +39,24 @@ function AdminPage(){
     </Form>;
     
     const assignmentform = <Form onFinish={handleSubmit}>
-    <Form.Item label="Assignment title:">
-        <Input placeholder="please enter your assignment title" name="assignmentTitle"/>
-    </Form.Item>
-    <Form.Item label="Assignment description:">
-        <Input placeholder="please enter your assignment description" name="assignmentDescription"/>
-    </Form.Item>
-    <Form.Item label="Assignment due date:">
-        <Input type="date" placeholder="please enter your assignment due date" name="assignmentDueDate"/>
-    </Form.Item>
-    <Form.Item>
-        <Button type="primary">Create Course</Button>
-    </Form.Item>
-    </Form>;
+       <Form.Item label="Assignment title:">
+           <Input placeholder="please enter your assignment title" name="assignmentTitle"/>
+       </Form.Item>
+       <Form.Item label="Assignment description:">
+           <Input placeholder="please enter your assignment description" name="assignmentDescription"/>
+       </Form.Item>
+       <Form.Item label="Assignment due date:">
+           <Input type="date" placeholder="please enter your assignment due date" name="assignmentDueDate"/>
+       </Form.Item>
+       <Form.Item>
+           <Button type="primary">Create Assignment</Button>
+       </Form.Item>
+       </Form>;
     
     return(
         <div style={{display:"flex",gap:"20px"}}>
         <div style={{width:"30%",
-        margin:"50px",
+         margin:"50px",
          backgroundColor:"white",
          marginLeft:"50px",
          padding:"16px",
@@ -67,7 +68,7 @@ function AdminPage(){
             <Select.Option value="courses">Course</Select.Option>
             <Select.Option value="assignments">Assignment</Select.Option>
         </Select>
-        {selected==="courses"? courseform : selected==="assignments"? assignmentform :<p>please select any above option to continue</p>}
+        {selected==="courses"? courseform : selected==="assignments"? <AssignmentForm/> :<p>please select any above option to continue</p>}
         </div>
          {/* <AssignmentTable/>   */}
          <Outlet></Outlet>
