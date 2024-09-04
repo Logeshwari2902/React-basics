@@ -2,32 +2,35 @@ import { render } from "@testing-library/react";
 import { Button, Modal, Table } from "antd";
 import { useState } from "react";
 import AssignmentForm from "./AssignmentForm";
+import { useSelector } from "react-redux";
 function AssignmentTable(){
+  const tableData=useSelector(state=>state.AssignmentTable)
   const [isModalOpen,setIsModalOpen]=useState(false)
-  const data=[
-    {
-    Sno: 1,
-    assignmentTitle: 'Assignment 1',
-    assignmentDescription:'This is the first assignment',
-    assignmentDueDate:'2024-08-12'
-  },
+  
+//   const data=[
+//     {
+//     Sno: 1,
+//     assignmentTitle: 'Assignment 1',
+//     assignmentDescription:'This is the first assignment',
+//     assignmentDueDate:'2024-08-12'
+//   },
 
-  {
-    Sno: 2,
-    assignmentTitle: 'Assignment 2',
-    assignmentDescription:'This is the first assignment',
-    assignmentDueDate:'2024-08-12'
-  },
-  {
-    Sno: 3,
-    assignmentTitle: 'Assignment 3',
-    assignmentDescription:'This is the first assignment',
-    assignmentDueDate:'2024-08-12'
-  }
-]
+//   {
+//     Sno: 2,
+//     assignmentTitle: 'Assignment 2',
+//     assignmentDescription:'This is the first assignment',
+//     assignmentDueDate:'2024-08-12'
+//   },
+//   {
+//     Sno: 3,
+//     assignmentTitle: 'Assignment 3',
+//     assignmentDescription:'This is the first assignment',
+//     assignmentDueDate:'2024-08-12'
+//   }
+// ]
 
 
-const[tableData,setTableData]=useState([data])
+// const[tableData,setTableData]=useState([data])
  const columns=[
     {
         key:'Sno',
@@ -73,7 +76,7 @@ const[tableData,setTableData]=useState([data])
   
   const handleDelete=(record)=> {
   const resultAfterDelete= tableData.filter((item)=>item.sno !== record.sno);
-  setTableData(resultAfterDelete)
+  // setTableData(resultAfterDelete)
  }
  
 const modal = <Modal title="update assignment" open={isModalOpen}  onCancel={handleCancel}><AssignmentForm/></Modal>

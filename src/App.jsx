@@ -5,14 +5,18 @@ import MainLayout from './pages/MainLayout';
 import { BrowserRouter } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider } from './Context/AuthContext';
+import store from './redux/Store';
+import { Provider } from 'react-redux';
 function App() {
   return (
+    <Provider store={store}>
     <BrowserRouter>
     <AuthProvider>
         <MainLayout/>  
       {/* <LoginPage/> */}
       </AuthProvider>
     </BrowserRouter>
+    </Provider>
     
   );
 }
